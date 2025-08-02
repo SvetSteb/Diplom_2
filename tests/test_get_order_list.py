@@ -15,7 +15,7 @@ class TestOrdersList:
         response = Order.get_users_orders_list()
         status = response.status_code
         message = response.json().get('message')
-        assert status == 401 and message == Messages.UNAUTH_USER
+        assert status == 401 and message == Messages.UNAUTH_USER, f'Статус ответа {status}, текст ответа {message}'
 
 
     @allure.title('Тестирование получения списка заказов АВТОРИЗОВАННОГО пользователя')
@@ -28,5 +28,5 @@ class TestOrdersList:
         response = Order.get_users_orders_list(accessToken)
         status = response.status_code
         message = response.text
-        assert status == 200 and order_id in message
+        assert status == 200 and order_id in message, f'Статус ответа {status}, текст ответа {message}'
 

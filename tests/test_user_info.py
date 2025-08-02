@@ -23,7 +23,7 @@ class TestModifyUser:
         status = response.status_code
         message = response.json().get('success')
         user_info = response.json().get('user')
-        assert status == 200 and user_info == data and message == True
+        assert status == 200 and user_info == data and message == True, f'Статус ответа {status}, текст ответа {message}'
 
 
     @allure.title('Изменение данных зарегистрированного пользователя С АВТОРИЗАЦИЕЙ')
@@ -43,7 +43,7 @@ class TestModifyUser:
         message = response.json().get('success')
         user_info = response.json().get('user')
         del new_data['password']
-        assert status == 200 and user_info == new_data and message == True
+        assert status == 200 and user_info == new_data and message == True, f'Статус ответа {status}, текст ответа {message}'
         Register.delete_user(accessToken)
 
 
@@ -60,7 +60,7 @@ class TestModifyUser:
         response = Register.change_user_info(data, accessToken)
         status = response.status_code
         message = response.json().get('message')
-        assert status == 403 and message == Messages.EMAIL_EXIST
+        assert status == 403 and message == Messages.EMAIL_EXIST, f'Статус ответа {status}, текст ответа {message}'
 
 
     @allure.title('Изменение данных пользователя БЕЗ АВТОРИЗАЦИИ')
@@ -78,7 +78,7 @@ class TestModifyUser:
         response = Register.change_user_info(new_data)
         status = response.status_code
         message = response.json().get('message')
-        assert status == 401 and message == Messages.UNAUTH_USER
+        assert status == 401 and message == Messages.UNAUTH_USER, f'Статус ответа {status}, текст ответа {message}'
         Register.delete_user(accessToken)
 
     

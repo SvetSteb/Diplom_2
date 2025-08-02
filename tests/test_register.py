@@ -32,7 +32,7 @@ class TestRegistration:
         response = Register.register_user(payload)
         status = response[1].status_code
         message = response[1].json().get('message')
-        assert status == 403 and message == Messages.USER_EXISTS
+        assert status == 403 and message == Messages.USER_EXISTS, f'Статус ответа {status}, текст ответа {message}'
 
 
     @allure.title('Тестирование регистрации без заполнения обязательных полей')
@@ -46,7 +46,7 @@ class TestRegistration:
         response = requests.post(Urls.REGISTER_URL, data=payload)
         status = response.status_code
         message = response.json().get('message')
-        assert status == 403 and message == Messages.REQUIRED_FIELADS
+        assert status == 403 and message == Messages.REQUIRED_FIELADS, f'Статус ответа {status}, текст ответа {message}'
 
 
     @allure.title('Тестирование регистрации email неверного формата')
@@ -58,5 +58,5 @@ class TestRegistration:
                 "name": generate_random_string(8)}
         response = requests.post(Urls.REGISTER_URL, data=payload)
         status = response.status_code
-        assert status == 500
+        assert status == 500, f'Статус ответа {status}'
 

@@ -15,7 +15,7 @@ class TestRegistration:
         response = Order.create_order(Order_info.INGREDIENTS)
         status = response.status_code
         message = response.json().get('success')
-        assert status == 200 and message == True
+        assert status == 200 and message == True, f'Статус ответа {status}, текст ответа {message}'
 
 
     @allure.title('Тестирование создания заказа с корректными данными АВТОРИЗОВАННЫМ пользователем')
@@ -27,7 +27,7 @@ class TestRegistration:
         response = Order.create_order(Order_info.INGREDIENTS, accessToken)
         status = response.status_code
         message = response.json().get('success')
-        assert status == 200 and message == True
+        assert status == 200 and message == True, f'Статус ответа {status}, текст ответа {message}'
 
 
     @allure.title('Тестирование создания заказа с БЕЗ ингридиентов, АВТОРИЗОВАННЫМ пользователем')
@@ -38,7 +38,7 @@ class TestRegistration:
         response = Order.create_order(accessToken=accessToken)
         status = response.status_code
         message = response.json().get('message')
-        assert status == 400 and message == Messages.ORDER_WITHOUT_INGREDIENTS
+        assert status == 400 and message == Messages.ORDER_WITHOUT_INGREDIENTS, f'Статус ответа {status}, текст ответа {message}'
 
     @allure.title('Тестирование создания заказа БЕЗ ингридиентов, НЕАВТОРИЗОВАННЫМ пользователем')
     @allure.description("""1. Отправить запрос на создание заказа без игридиентов, без авторизации
@@ -47,7 +47,7 @@ class TestRegistration:
         response = Order.create_order()
         status = response.status_code
         message = response.json().get('message')
-        assert status == 400 and message == Messages.ORDER_WITHOUT_INGREDIENTS
+        assert status == 400 and message == Messages.ORDER_WITHOUT_INGREDIENTS, f'Статус ответа {status}, текст ответа {message}'
 
     @allure.title('Тестирование создания заказа c неверным хэшем ингридиентов, НЕАВТОРИЗОВАННЫМ пользователем')
     @allure.description("""Предусловие: существует набор корректных ингридиентов Data.py:Burger/WRONG_INGREDIENTS
@@ -57,4 +57,4 @@ class TestRegistration:
         response = Order.create_order(Order_info.WRONG_INGREDIENTS)
         status = response.status_code
         message = response.json().get('message')
-        assert status == 400 and message == Messages.INCORRECT_INGREDIENTS
+        assert status == 400 and message == Messages.INCORRECT_INGREDIENTS, f'Статус ответа {status}, текст ответа {message}'

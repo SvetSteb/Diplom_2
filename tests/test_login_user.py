@@ -20,7 +20,7 @@ class TestRegistration:
         response = Register.login_user(data)
         status = response.status_code
         message = response.json().get('success')
-        assert status == 200 and message == True
+        assert status == 200 and message == True, f'Статус ответа {status}, текст ответа {message}'
 
 
     @allure.title('Тестирование авторизации с некоррекными авторизационными данными')
@@ -34,4 +34,4 @@ class TestRegistration:
         response = Register.login_user(data)
         status = response.status_code
         message = response.json().get('message')
-        assert status == 401 and message == Messages.PASSWORD_INCORRECT
+        assert status == 401 and message == Messages.PASSWORD_INCORRECT, f'Статус ответа {status}, текст ответа {message}'
